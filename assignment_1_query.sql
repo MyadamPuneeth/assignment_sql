@@ -158,27 +158,33 @@ drop table tableOfDates;
 
 drop table employeeTable;
 
-create table employeeTable(
-emp_id int primary key,
-emp_name nvarchar(50),
-manager_id int);
+create table employeetable (
+    emp_id int primary key,
+    emp_name nvarchar(50),
+    manager_id int
+);
 
-insert into employeeTable
-values
-(1, 'A', null),
+insert into employeetable values
+(1, 'a', null),
 (2, 'b', 1),
 (3, 'c', 1),
 (4, 'd', 2),
 (5, 'e', 2),
 (6, 'f', 2);
 
-WITH cte AS (
-    SELECT e.emp_id, e.emp_name, CAST('ceo' AS VARCHAR(20)) AS manager_name, 1 AS emp_level
-    FROM employeeTable AS e
-    WHERE manager_id IS NULL
-    UNION ALL
-    SELECT e.emp_id, e.emp_name, m.emp_name AS manager_name, (emp_level + 1) AS hierarchy_level
-    FROM employeeTable AS e
-    INNER JOIN cte m ON m.emp_id = e.manager_id
+with cte as (
+    select e.emp_id,
+           e.emp_name,
+           cast('none' as varchar(20)) as manager_name,
+           1 as emp_level
+    from employeetable as e
+    where manager_id is null
+    union all
+    select e.emp_id,
+           e.emp_name,
+           cast(m.emp_name as varchar(20)) as manager_name,
+           (emp_level + 1) as hierarchy_level
+    from employeetable as e
+    inner join cte m on m.emp_id = e.manager_id
 )
-SELECT * FROM cte ORDER BY emp_level;
+select emp_id, emp_name, manager_name, emp_level from cte order by emp_level;
