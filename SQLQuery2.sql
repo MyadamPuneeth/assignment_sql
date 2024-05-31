@@ -1,51 +1,38 @@
-CREATE TABLE address_data (
-sno INT PRIMARY KEY,
-house_no NVARCHAR(50),
-locality NVARCHAR(50),
-area NVARCHAR(50),
-city NVARCHAR(50));
+drop table employeeTable;
 
-DROP TABLE contact_data;
+create table employeeTable(
+emp_id int primary key,
+emp_name nvarchar(50),
+manager_id int);
 
-CREATE TABLE contact_data (
-sno INT ,
-c_sno INT PRIMARY KEY,
-ph_no BIGINT,
-email NVARCHAR(50),
-alternate_ph_no BIGINT,
-personName NVARCHAR(50),
-FOREIGN KEY (sno) REFERENCES address_data(sno));
+insert into employeeTable
+values
+(1, 'A', null),
+(2, 'b', 1),
+(3, 'c', 1),
+(4, 'd', 2),
+(5, 'e', 2),
+(6, 'f', 2);
 
-ALTER TABLE address_data
-add personName NVARCHAR(50);
+WITH cte AS (
+    SELECT e.emp_id, e.emp_name, CAST('ceo' AS NVARCHAR(20)) AS manager_name, 1 AS emp_level
+    FROM employeeTable AS e
+    WHERE manager_id IS NULL
+    UNION ALL
+    SELECT e.emp_id, e.emp_name, m.emp_name AS manager_name, (emp_level + 1) AS hierarchy_level
+    FROM employeeTable AS e
+    INNER JOIN cte m ON m.emp_id = e.manager_id
+)
+SELECT * FROM cte ORDER BY emp_level;
 
+select * from computedColumnTable;
 
-SELECT * from address_data;
+alter table computedColumnTable drop column computed_column_div;
 
-SELECT * from contact_data;
+/* select column1 , column2 from computedColumnTable where computed_cloumn_add >0
+group by computed_cloumn_sub having computed_cloumn_sub < 50000 order by column2; */
 
-INSERT INTO address_data
-VALUES
-(1, '13-6-457/23/A', 'Gudimalkapur', 'Mehdipatnam', 'Hyderabad', 'puneeth'),
-(2, '13-6-457/53/1347', 'some-colony-A', 'madhapur', 'Hyderabad','vijay'),
-(3, '13-6-457/53/1347', 'some-colony-A', 'madhapur', 'Hyderabad', 'Purendar'),
-(4, '657-27-757', 'some-colony-B', 'bachupally', 'Hyderabad', 'rithvik');
+alter table computedColumnTable add constraint pk primary key (computed_cloumn);
 
-INSERT INTO contact_data
-VALUES
-(1, 10, 7680826042, 'myadampuneeth@gmail.com', 9666425430, 'puneeth'),
-(3, 20, 1234567890,'purendar@gmail.com', 8765434564, 'Purendar'),
-(2, 30, 1234567890, 'vijay@gmail.com', 8765434564, 'vijay'),
-(4, 40, 0987654321, 'rithvik@gmail.com', 2345678901, 'rithivk');
+alter table computedColumnTable alter column computed_cloumn int not null;
 
-SELECT contact_data.ph_no, address_data.locality
-FROM contact_data
-JOIN address_data on contact_data.sno = address_data.sno
-WHERE contact_data.personName = 'puneeth';
-
-SELECT personName from address_data
-where area = 'madhapur';
-
-Drop database p123;
-
-CREATE TABLE USERS_DETAILS (UNAME NVARCHAR(10), UNUM INT) INSERT VALUES ('PUNEETH', 267);

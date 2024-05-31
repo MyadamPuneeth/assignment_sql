@@ -146,3 +146,13 @@ select floor(87458*0.32483);
 select (87458*0.32483);
 
 select ISNUMERIC('pkjh');
+
+select charindex ('hey', 'hello hi hiiii hey how are you?');
+
+select convert ('8765' as int) as errorType;
+
+SELECT PARSE('12/25/2023' AS DATE USING 'en-US') AS ParsedDate;
+
+SELECT DATEPART(year, GETDATE()) AS CurrentYear;
+
+
