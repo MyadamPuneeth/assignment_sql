@@ -166,38 +166,39 @@ emp_name nvarchar(10),
 emp_id int primary key,
 emp_age int,
 emp_join_date date,
-emp_service_type nvarchar(10));
+emp_service_type nvarchar(10),
+emp_location nvarchar(20));
 
 select * from assignmentTable1;
 
 drop table assignmentTable1;
 
-insert into assignmentTable1 values 
-('puneeth', 267, 21, '2024-05-01', 'delivery'),
-('purandhar', 264, 22, '2023-10-25', 'delivery'),
-('vijay', 265, 20, '2021-05-01', 'delivery'),
-('srinivas', 266, 23, '2020-01-16', 'delivery'),
-('rithvik', 268, 22, '2022-03-31', 'delivery'),
-('john', 269, 25, '2023-06-12', 'sales'),
-('jane', 270, 28, '2022-11-05', 'marketing'),
-('doe', 271, 30, '2021-09-17', 'hr'),
-('alex', 272, 24, '2020-12-20', 'finance'),
-('emma', 273, 29, '2019-07-30', 'it'),
-('liam', 274, 27, '2018-08-14', 'sales'),
-('olivia', 275, 26, '2017-03-22', 'marketing'),
-('noah', 276, 32, '2016-11-30', 'hr'),
-('ava', 277, 31, '2015-05-15', 'finance'),
-('isabella', 278, 33, '2014-04-18', 'it'),
-('mason', 279, 35, '2013-10-10', 'sales'),
-('sophia', 280, 34, '2012-08-08', 'marketing'),
-('ethan', 281, 29, '2011-06-04', 'hr'),
-('mia', 282, 28, '2010-07-27', 'finance'),
-('logan', 283, 26, '2009-02-19', 'it'),
-('amelia', 284, 27, '2008-01-11', 'sales'),
-('lucas', 285, 25, '2007-12-09', 'marketing'),
-('charlotte', 286, 24, '2006-03-07', 'hr'),
-('aiden', 287, 31, '2005-10-15', 'finance'),
-('ella', 288, 32, '2004-11-23', 'it');
+insert into assignmentTable1 values
+('puneeth', 267, 21, '2024-05-01', 'delivery', 'New York'),
+('purandhar', 264, 22, '2023-10-25', 'delivery', 'Los Angeles'),
+('vijay', 265, 20, '2021-05-01', 'delivery', 'Chicago'),
+('srinivas', 266, 23, '2020-01-16', 'delivery', 'New York'),
+('rithvik', 268, 22, '2022-03-31', 'delivery', 'Los Angeles'),
+('john', 269, 25, '2023-06-12', 'sales', 'Chicago'),
+('jane', 270, 28, '2022-11-05', 'marketing', 'New York'),
+('doe', 271, 30, '2021-09-17', 'hr', 'Los Angeles'),
+('alex', 272, 24, '2020-12-20', 'finance', 'Chicago'),
+('emma', 273, 29, '2019-07-30', 'it', 'New York'),
+('liam', 274, 27, '2018-08-14', 'sales', 'Los Angeles'),
+('olivia', 275, 26, '2017-03-22', 'marketing', 'Chicago'),
+('noah', 276, 32, '2016-11-30', 'hr', 'New York'),
+('ava', 277, 31, '2015-05-15', 'finance', 'Los Angeles'),
+('isabella', 278, 33, '2014-04-18', 'it', 'Chicago'),
+('mason', 279, 35, '2013-10-10', 'sales', 'New York'),
+('sophia', 280, 34, '2012-08-08', 'marketing', 'Los Angeles'),
+('ethan', 281, 29, '2011-06-04', 'hr', 'Chicago'),
+('mia', 282, 28, '2010-07-27', 'finance', 'New York'),
+('logan', 283, 26, '2009-02-19', 'it', 'Los Angeles'),
+('amelia', 284, 27, '2008-01-11', 'sales', 'Chicago'),
+('lucas', 285, 25, '2007-12-09', 'marketing', 'New York'),
+('charlotte', 286, 24, '2006-03-07', 'hr', 'Los Angeles'),
+('aiden', 287, 31, '2005-10-15', 'finance', 'Chicago'),
+('ella', 288, 32, '2004-11-23', 'it', 'New York');
 
 
 -- 4.write a query to Get Max, Min and Average age of employees, service of employees by service Type , Service Status for each Centre(display in years and Months)
@@ -207,11 +208,13 @@ select @maxage = max(emp_age) from assignmentTable1;
 
 select 
 emp_service_type,
-min(emp_age),
-max(emp_age),
-avg(emp_age)
+emp_location,
+min(emp_age) as min_age,
+max(emp_age) as max_age,
+avg(emp_age) as avg_age,
+max(datediff(year, emp_join_date, getdate())) as service_year_for_center
 from assignmentTable1
- group by emp_service_type;
+group by emp_service_type, emp_location;
 
 -----------------------------NOT YET COMPLETED ABOVE QUESTION-----------------------------------
 
