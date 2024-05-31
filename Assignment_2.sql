@@ -34,7 +34,8 @@ from
 group by emp_location,emp_dept 
 having sum(emp_sal)>= 2*avg(emp_sal) and max(emp_basic) >= 3*min(emp_basic);
 
---------------------------------------------------------------------------------------------------------
+============================================================================================================================================================
+
 
 --2. As per the companies rule if an employee has put up service of 1 Year 3 Months and 15 days in office, Then She/he would be eligible for a Bonus. the Bonus would be Paid on the first of the Next month after which a person has attained eligibility. Find out the eligibility date for all the employees. And also find out the age of the Employee On the date of Payment of the First bonus. Display the Age in Years, Months, and Days. Also Display the weekday Name, week of the year, Day of the year and week of the month of the date on which the person has attained the eligibility.
 
@@ -75,7 +76,8 @@ datepart(DAYOFYEAR, dateadd(day, 455, emp_jd)) as day_of_year,
 (datepart(day,dateadd(day, 455, emp_jd))-1)/7 + 1 as week_of_month
 from question2A2;
 
---------------------------------------------------------------------------------------------------------
+============================================================================================================================================================
+
 
 /*
 3. Company Has decided to Pay a bonus to all its employees. The criteria is as follows
@@ -158,6 +160,7 @@ datediff(year, emp_jd, getdate()) as service_years,
 65 - datediff(year, emp_dob, getdate()) as remaining_service_years
 from question3A2 where (datediff(year, emp_jd, getdate())) > 15 and (60 - datediff(year, emp_dob, getdate()))>= 20;
 
+============================================================================================================================================================
 
 -- assignment table 1
 
@@ -216,7 +219,8 @@ max(datediff(year, emp_join_date, getdate())) as service_year_for_center
 from assignmentTable1
 group by emp_service_type, emp_location;
 
------------------------------NOT YET COMPLETED ABOVE QUESTION-----------------------------------
+============================================================================================================================================================
+
 
 --5. Write a query to list out all the employees where any of the words (Excluding Initials) in the Name starts and ends with the same character. (Assume there are not more than 5 characters in any name)
 
@@ -241,7 +245,8 @@ select
 	substring(emp_name, CHARINDEX(' ', emp_name )+1, len(emp_name)) as firstName 
 	from assignmentTable2  where left(emp_name, 1) = right(emp_name, 1);
 
---------------------------------------------------------------------------------------------------------
+============================================================================================================================================================
+
 
 
 
